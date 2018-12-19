@@ -75,5 +75,62 @@ void main() {
       expect(myComponent.value, "Hello world");
       expect(myComponent.value2, 1337);
     });
+
+    test("should inject dependencies over multiple component tiers", () {
+      var module1 = Module.createModule(body: (module) {
+        module
+          ..bind<String>(body: (dsl) {
+            dsl..factory((factory) => "Hello world");
+          });
+      });
+
+      var component1 = Component.createComponent(modules: [module1]);
+      var component2 = Component.createComponent(dependsOn: [component1]);
+      var module3 = Module.createModule(body: (module) {
+        module
+          ..bind<int>(body: (dsl) {
+            dsl..factory((factory) => 1337);
+          });
+      });
+      var component3 = Component.createComponent(
+          modules: [module3], dependsOn: [component2]);
+
+      expect(component3.canInject<String>(), true);
+      expect(component3.canInject<int>(), true);
+      expect(component3.inject<String>(), "Hello world");
+      expect(component3.inject<int>(), 1337);
+    });
+
+    test("should throw override exception for overrides in components", () {
+      var module1 = Module.createModule(body: (module) {
+        module
+          ..bind<MyComponent>(body: (dsl) {
+            dsl..factory((factory) => MyComponentA());
+          });
+      });
+
+      var module2 = Module.createModule(body: (module) {
+        module
+          ..bind<MyComponent>(body: (dsl) {
+            dsl..factory((factory) => MyComponentA());
+          });
+      });
+
+      var module3 = Module.createModule(body: (module) {
+        module
+          ..bind<String>(body: (dsl) {
+            dsl..factory((factory) => "Hello world");
+          });
+      });
+
+      var component1 = Component.createComponent(modules: [module1]);
+      var component2 = Component.createComponent(modules: [module2]);
+
+      var fn = () =>
+          Component.createComponent(
+              modules: [module3], dependsOn: [component1, component2]);
+
+      expect(() => fn(), throwsOverrideException);
+    });
   });
 }

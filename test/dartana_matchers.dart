@@ -6,6 +6,8 @@ const isComponentException = const TypeMatcher<ComponentException>();
 
 const isInjectionException = const TypeMatcher<InjectionException>();
 
+const isOverrideException = const TypeMatcher<OverrideException>();
+
 /// A matcher for functions that throw ComponentException.
 const Matcher throwsComponentException =
 // ignore: deprecated_member_use
@@ -15,3 +17,8 @@ const Matcher throwsComponentException =
 const Matcher throwsInjectionException =
 // ignore: deprecated_member_use
     Throws(isInjectionException);
+
+/// A matcher for functions that throw InjectionException.
+const Matcher throwsOverrideException =
+// ignore: deprecated_member_use
+Throws(isOverrideException);
