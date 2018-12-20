@@ -8,6 +8,8 @@ const isInjectionException = const TypeMatcher<InjectionException>();
 
 const isOverrideException = const TypeMatcher<OverrideException>();
 
+const isStackOverflowError = const TypeMatcher<StackOverflowError>();
+
 /// A matcher for functions that throw ComponentException.
 const Matcher throwsComponentException =
 // ignore: deprecated_member_use
@@ -22,3 +24,8 @@ const Matcher throwsInjectionException =
 const Matcher throwsOverrideException =
 // ignore: deprecated_member_use
 Throws(isOverrideException);
+
+/// A matcher for functions that throw StackOverflowError.
+const Matcher throwsStackOverflowError =
+// ignore: deprecated_member_use
+Throws(isStackOverflowError);

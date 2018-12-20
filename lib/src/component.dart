@@ -25,6 +25,9 @@ class Component {
             _instances[declaration.key] = declaration.provider(_context));
   }
 
+  static Component fromModule(Module module) =>
+      Component.createComponent(modules: [module]);
+
   static Component fromModules(Iterable<Module> modules) =>
       Component.createComponent(modules: modules);
 
@@ -156,7 +159,13 @@ class ComponentContext {
     }
 
     if (result == null) {
-      throw InjectionException("No binding found for ${key.toString()}");
+      var msg = "No binding found for ${key.toString()}";
+      var injectionException = InjectionException(msg);
+
+      Logger()
+          .error(() => MapEntry<String, Exception>(msg, injectionException));
+
+      throw injectionException;
     }
 
     return result;

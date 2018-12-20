@@ -80,6 +80,7 @@ class ProviderDsl {
     return context.injectNow<T>(name: name);
   }
 
+  // TODO: We need to find a way to implement lazy injections
 //  T lazy<T>({String name}) {
 //
 //  }
