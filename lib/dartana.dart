@@ -5,5 +5,5 @@ library dartana;
 
 export 'src/component.dart';
 export 'src/dartana.dart';
-export 'src/dartana_trait.dart';
+export 'src/dartana_mixin.dart';
 export 'src/module.dart';

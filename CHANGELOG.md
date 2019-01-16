@@ -1,3 +1,4 @@
 ## 1.0.0
 
-- Initial version, created by Stagehand
+- Port of Katana 1.0.2
+- First draft of Dart DSL for module injection

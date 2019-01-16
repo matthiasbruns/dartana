@@ -5,12 +5,18 @@ class DartanaException implements Exception {
   Exception exception;
 
   DartanaException(this.cause, this.exception);
+
+  @override
+  String toString() => "$exception $cause";
 }
 
 class ComponentException implements Exception {
   String cause;
 
   ComponentException(this.cause);
+
+  @override
+  String toString() => "$cause";
 }
 
 class ComponentNotInitializedException extends ComponentException {
