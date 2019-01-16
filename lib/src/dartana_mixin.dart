@@ -3,7 +3,7 @@ import 'exceptions.dart';
 
 typedef WithComponent<R> = R Function(Component);
 
-class DartanaTrait {
+mixin DartanaMixin {
   Component component;
 
   T inject<T>({String name}) {
