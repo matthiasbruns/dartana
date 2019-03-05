@@ -21,7 +21,7 @@ mixin DartanaMixin {
   R withComponent<R>(WithComponent body) {
     if (component == null) {
       throw ComponentNotInitializedException(
-          "component is null! Make sure to use KatanaTrait's extension functions *after* component property was initialized.");
+          "Component is null! Make sure that you have assigned your component to the DartanaMixin.");
     } else {
       return body(component);
     }
