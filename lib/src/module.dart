@@ -16,13 +16,13 @@ class Module {
 
   Module({this.name}) : _declarations = Map();
 
-  static Module createModule({String name, @required Function(Module) body}) {
+  static Module createModule(Function(Module) body, {String name}) {
     final module = Module(name: name);
     body(module);
     return module;
   }
 
-  Module bind<T>({String name, @required Module Function(BindingDsl<T>) body}) {
+  Module bind<T>(Module Function(BindingDsl<T>) body, {String name}) {
     var dsl = BindingDsl<T>(module: this, type: T, name: name);
     return body(dsl);
   }

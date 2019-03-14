@@ -6,24 +6,23 @@ import 'test_classes.dart';
 
 void main() {
   group("Injection", () {
-    var module1 = Module.createModule(body: (module) {
-      module.bind<String>(body: (dsl) => dsl.factory((_) => "Hello World"));
+    var module1 = Module.createModule((module) {
+      module.bind<String>((dsl) => dsl.factory((_) => "Hello World"));
     });
     var component1 = Component.fromModules([module1]);
 
-    var module2 = Module.createModule(body: (module) {
-      module.bind<MyComponent>(
-          body: (dsl) => dsl.singleton((_) => MyComponentA()));
+    var module2 = Module.createModule((module) {
+      module.bind<MyComponent>((dsl) => dsl.singleton((_) => MyComponentA()));
     });
-    var module3 = Module.createModule(body: (module) {
+    var module3 = Module.createModule((module) {
       module
         ..bind<MyComponent>(
-          name: "myComponent2",
-          body: (dsl) =>
+          (dsl) =>
               dsl.factory((_) => MyComponentB<String>(component1.injectNow())),
+          name: "myComponent2",
         )
         ..bind<MyComponentB<String>>(
-          body: (dsl) =>
+          (dsl) =>
               dsl.factory((component) => component.get(name: "myComponent2")),
         );
     });
@@ -58,16 +57,16 @@ void main() {
     });
 
     test("should provide dependencies across createModule boundaries", () {
-      var module4 = Module.createModule(body: (module) {
+      var module4 = Module.createModule((module) {
         module
-          ..bind<MyComponentA>(body: (dsl) {
+          ..bind<MyComponentA>((dsl) {
             dsl.factory((_) => MyComponentA());
           });
       });
 
-      var module5 = Module.createModule(body: (module) {
+      var module5 = Module.createModule((module) {
         module
-          ..bind<MyComponentB<MyComponentA>>(body: (dsl) {
+          ..bind<MyComponentB<MyComponentA>>((dsl) {
             dsl.factory((component) => MyComponentB(component.get()));
           });
       });
@@ -79,9 +78,9 @@ void main() {
     });
 
     test("should throw exception when dependency was not declared", () {
-      var module = Module.createModule(body: (module) {
+      var module = Module.createModule((module) {
         module
-          ..bind<int>(body: (dsl) {
+          ..bind<int>((dsl) {
             dsl.factory((_) => 1337);
           });
       });
@@ -98,12 +97,12 @@ void main() {
     test("eager singletons should be initialized when component is created",
         () {
       var timesSingletonCreated = 0;
-      var module = Module.createModule(body: (module) {
+      var module = Module.createModule((module) {
         module
-          ..bind<String>(body: (dsl) {
-            dsl.factory((_) => "Hello world");
+          ..bind<String>((dsl) {
+            dsl.factory((_) => "Hello World");
           })
-          ..bind<MyComponentB<String>>(body: (dsl) {
+          ..bind<MyComponentB<String>>((dsl) {
             dsl.eagerSingleton((component) {
               timesSingletonCreated++;
               return MyComponentB(component.get());
@@ -121,12 +120,12 @@ void main() {
     });
 
     test("circular dependencies should fail", () {
-      var module = Module.createModule(body: (module) {
+      var module = Module.createModule((module) {
         module
-          ..bind<A>(body: (dsl) {
+          ..bind<A>((dsl) {
             dsl.singleton((component) => A(component.get()));
           })
-          ..bind<B>(body: (dsl) {
+          ..bind<B>((dsl) {
             dsl.singleton((component) => B(component.get()));
           });
       });

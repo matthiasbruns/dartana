@@ -7,15 +7,15 @@ mixin DartanaMixin {
   Component component;
 
   T inject<T>({String name}) {
-    return withComponent((component) => component.inject<T>(name: name));
+    return withComponent((component) => component.inject<T>(name));
   }
 
   T injectNow<T>({String name}) {
-    return withComponent((component) => component.injectNow<T>(name: name));
+    return withComponent((component) => component.injectNow<T>(name));
   }
 
   T canInject<T>({String name}) {
-    return withComponent((component) => component.canInject<T>(name: name));
+    return withComponent((component) => component.canInject<T>(name));
   }
 
   R withComponent<R>(WithComponent body) {

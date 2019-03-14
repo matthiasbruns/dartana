@@ -1,5 +1,4 @@
 import "package:dartana/dartana.dart";
-import 'package:dartana/src/internal/logger.dart';
 import "package:test/test.dart";
 
 import 'dartana_matchers.dart';
@@ -11,12 +10,12 @@ void main() {
         'should throw exception when dependencies are overridden in same createModule',
         () {
       var fn = () {
-        Module.createModule(body: (module) {
+        Module.createModule((module) {
           module
-            ..bind<MyComponent>(body: (dsl) {
+            ..bind<MyComponent>((dsl) {
               dsl.factory((_) => MyComponentA());
             })
-            ..bind<MyComponent>(body: (dsl) {
+            ..bind<MyComponent>((dsl) {
               dsl.factory((_) => MyComponentA());
             });
         });
@@ -29,18 +28,20 @@ void main() {
         'should throw exception when dependencies are overridden in same createModule with identical names',
         () {
       var fn = () {
-        Module.createModule(body: (module) {
+        Module.createModule((module) {
           module
             ..bind<MyComponentA>(
-                name: "createComponent",
-                body: (dsl) {
-                  dsl.factory((_) => MyComponentA());
-                })
+              (dsl) {
+                dsl.factory((_) => MyComponentA());
+              },
+              name: "createComponent",
+            )
             ..bind<MyComponentB<String>>(
-                name: "createComponent",
-                body: (dsl) {
-                  dsl.factory((_) => MyComponentB("Hello world"));
-                });
+              (dsl) {
+                dsl.factory((_) => MyComponentB("Hello world"));
+              },
+              name: "createComponent",
+            );
         });
       };
 
@@ -50,16 +51,16 @@ void main() {
     test(
         'should throw exception when dependencies are overridden in multiple modules',
         () {
-      var module1 = Module.createModule(body: (module) {
+      var module1 = Module.createModule((module) {
         module
-          ..bind<MyComponent>(body: (dsl) {
+          ..bind<MyComponent>((dsl) {
             dsl.factory((_) => MyComponentA());
           });
       });
 
-      var module2 = Module.createModule(body: (module) {
+      var module2 = Module.createModule((module) {
         module
-          ..bind<MyComponent>(body: (dsl) {
+          ..bind<MyComponent>((dsl) {
             dsl.factory((_) => MyComponentA());
           });
       });

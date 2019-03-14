@@ -120,15 +120,15 @@ class Component {
   }
 
   T inject<T>([String name]) {
-    return _context.inject<T>(name: name);
+    return _context.inject<T>(name);
   }
 
   T injectNow<T>([String name]) {
-    return _context.injectNow<T>(name: name);
+    return _context.injectNow<T>(name);
   }
 
   bool canInject<T>([String name]) {
-    return _context.canInject<T>(name: name);
+    return _context.canInject<T>(name);
   }
 }
 
