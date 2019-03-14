@@ -1,7 +1,6 @@
-A library for Dart developers.
+[![Build Status](https://travis-ci.com/matthiasbruns/dartana.svg?branch=develop)](https://travis-ci.com/matthiasbruns/dartana)
 
-Created from templates made available by Stagehand under a BSD-style
-[license](https://github.com/dart-lang/stagehand/blob/master/LICENSE).
+Runtime dependency injection for Dart and Flutter developers.
 
 ## Usage
 
@@ -19,4 +18,4 @@ main() {
 
 Please file feature requests and bugs at the [issue tracker][tracker].
 
-[tracker]: http://example.com/issues/replaceme
+[tracker]: [https://github.com/matthiasbruns/dartana/issues]
