@@ -32,7 +32,7 @@ void main() {
     test("should inject non-conflicting dependencies", () {
       var string = component1.inject<String>();
       var myComponent = component2.inject<MyComponent>();
-      var myComponent2 = component2.inject(name: "myComponent2");
+      var myComponent2 = component2.inject("myComponent2");
       var myComponent3 = component2.inject<MyComponentB<String>>();
       expect(string, "Hello world");
       expect(myComponent, TypeMatcher<MyComponentA>());
@@ -48,12 +48,13 @@ void main() {
       expect(myComponent, myComponent2);
     });
 
-    test("should create singletons just once", () {
+    test("should provide injection possibility via canInject()", () {
       expect(component1.canInject<String>(), true);
-      expect(component1.canInject<MyComponent>(name: "myComponent2"), true);
+      expect(component2.canInject<MyComponent>(), true);
+      expect(component2.canInject<MyComponent>("myComponent2"), true);
 
       expect(component2.canInject<String>(), false);
-      expect(component2.canInject<MyComponent>(name: "myComponent3"), false);
+      expect(component2.canInject<MyComponent>("myComponent3"), false);
     });
 
     test("should provide dependencies across createModule boundaries", () {
@@ -100,7 +101,7 @@ void main() {
       var module = Module.createModule(body: (module) {
         module
           ..bind<String>(body: (dsl) {
-            dsl.factory((_) => "Hello World");
+            dsl.factory((_) => "Hello world");
           })
           ..bind<MyComponentB<String>>(body: (dsl) {
             dsl.eagerSingleton((component) {

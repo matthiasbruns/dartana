@@ -119,15 +119,15 @@ class Component {
     return _context.injectByKey(key);
   }
 
-  T inject<T>({String name}) {
+  T inject<T>([String name]) {
     return _context.inject<T>(name: name);
   }
 
-  T injectNow<T>({String name}) {
+  T injectNow<T>([String name]) {
     return _context.injectNow<T>(name: name);
   }
 
-  bool canInject<T>({String name}) {
+  bool canInject<T>([String name]) {
     return _context.canInject<T>(name: name);
   }
 }
@@ -174,15 +174,15 @@ class ComponentContext {
     }
   }
 
-  T inject<T>({String name}) {
-    return injectNow<T>(name: name);
+  T inject<T>([String name]) {
+    return injectNow<T>(name);
   }
 
-  T injectNow<T>({String name}) {
+  T injectNow<T>([String name]) {
     return injectByKey<T>(Key.of(T, name: name));
   }
 
-  bool canInject<T>({String name}) {
+  bool canInject<T>([String name]) {
     return _canInject(Key.of(T, name: name));
   }
 }

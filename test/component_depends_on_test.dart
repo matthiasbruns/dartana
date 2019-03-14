@@ -30,7 +30,7 @@ void main() {
 
       var component1 = Component.createComponent(modules: [module1]);
       expect(component1.inject<String>(), "Hello world");
-      expect(component1.inject(name: "another"), "Hello world 2");
+      expect(component1.inject("another"), "Hello world 2");
       expect(() => component1.inject<int>(), throwsInjectionException);
 
       var module2 = Module.createModule(body: (module) {
@@ -63,7 +63,7 @@ void main() {
       expect(component3.canInject<MyComponentC<String, int>>(), true);
       expect(component3.canInject<int>(), true);
       expect(component3.canInject<String>(), true);
-      expect(component3.canInject<String>(name: "another"), true);
+      expect(component3.canInject<String>("another"), true);
       expect(component3.canInject<MyComponent>(), false);
 
       expect(component3.inject<String>(), "Hello world");
