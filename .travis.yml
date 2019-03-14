@@ -4,8 +4,8 @@ dart:
 - stable
 
 script:
-  - pub get --packages-dir
-  - pub run test
+  - pub get
+  - pub run test test/
 
 dart_task:
 - test: --platform vm
