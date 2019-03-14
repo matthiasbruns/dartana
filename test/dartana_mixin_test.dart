@@ -23,8 +23,9 @@ void main() {
   group("DartanaMixin", () {
     test('should throw meaningful exception when component was not initialized',
         () {
-      expect(DelegateBeforeInitialization(),
-          throwsComponentNotInitializedException);
+      expect(() {
+        DelegateBeforeInitialization();
+      }, throwsComponentNotInitializedException);
     });
   });
 }
