@@ -5,7 +5,7 @@ dart:
 
 script:
   - pub get
-  - pub run test test/
+  - pub run test ./test/
 
 dart_task:
 - test: --platform vm
