@@ -6,8 +6,8 @@ import 'test_classes.dart';
 import 'test_logger.dart';
 
 void main() {
-  Dartana().logger = TestLogger();
-
+  Dartana.logger = TestLogger();
+  
   group("Injection with multiple components", () {
     test("should inject dependencies", () {
       var module1 = Module.createModule(body: (module) {

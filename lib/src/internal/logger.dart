@@ -3,22 +3,20 @@ import '../dartana.dart';
 typedef MessageProvider = String Function();
 typedef MessageWithThrowableProvider = MapEntry<String, Exception> Function();
 
-class Logger {
-  final Dartana dartana = Dartana();
-
-  void debug(MessageProvider provider) {
-    dartana.logger?.debug(provider());
+class DartanaLogger {
+  static void debug(MessageProvider provider) {
+    Dartana.logger?.debug(provider());
   }
 
-  void info(MessageProvider provider) {
-    dartana.logger?.info(provider());
+  static void info(MessageProvider provider) {
+    Dartana.logger?.info(provider());
   }
 
-  void warn(MessageProvider provider) {
-    dartana.logger?.warn(provider());
+  static void warn(MessageProvider provider) {
+    Dartana.logger?.warn(provider());
   }
 
-  void error(MessageWithThrowableProvider provider) {
-    dartana.logger?.error(provider().key, provider().value);
+  static void error(MessageWithThrowableProvider provider) {
+    Dartana.logger?.error(provider().key, provider().value);
   }
 }

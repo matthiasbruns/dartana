@@ -12,6 +12,8 @@ class Logger {
 
 class Dartana {
   static final Dartana _instance = Dartana._internal();
+  
+  static Logger logger;
 
   factory Dartana() {
     return _instance;
@@ -19,5 +21,4 @@ class Dartana {
 
   Dartana._internal();
 
-  Logger logger;
 }

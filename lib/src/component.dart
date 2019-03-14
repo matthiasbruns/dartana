@@ -42,7 +42,7 @@ class Component {
 
     var moduleDeclarations = IterableExtensions.fold(
         modules.map((module) => module.declarations), each: (declaration) {
-      Logger().info(() => "Registering declaration $declaration");
+      DartanaLogger.info(() => "Registering declaration $declaration");
     });
 
     var componentDeclaration =
@@ -67,20 +67,20 @@ class Component {
       throw InjectionException("No binding found for ${key.toString()}");
     } else {
       try {
-        Logger().info(() => "Injecting dependency for ${key.toString()}");
+        DartanaLogger.info(() => "Injecting dependency for ${key.toString()}");
 
         switch (declaration.injectionType) {
           case InjectionType.FACTORY:
             instance = declaration.provider(_context);
-            Logger().debug(() => "Created instance for ${key.toString()}");
+            DartanaLogger.debug(() => "Created instance for ${key.toString()}");
             break;
           case InjectionType.SINGLETON:
             instance = _instances[key];
             if (instance != null) {
-              Logger().debug(() =>
+              DartanaLogger.debug(() =>
                   "Returning existing singleton instance for ${key.toString()}");
             } else {
-              Logger().debug(
+              DartanaLogger.debug(
                   () => "Created singleton instance for ${key.toString()}");
               instance = _instances[key] = declaration.provider(_context);
             }
