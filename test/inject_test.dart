@@ -7,7 +7,7 @@ import 'test_classes.dart';
 void main() {
   group("Injection", () {
     var module1 = Module.createModule((module) {
-      module.bind<String>((dsl) => dsl.factory((_) => "Hello World"));
+      module.bind<String>((dsl) => dsl.factory((_) => "Hello world"));
     });
     var component1 = Component.fromModules([module1]);
 
@@ -100,7 +100,7 @@ void main() {
       var module = Module.createModule((module) {
         module
           ..bind<String>((dsl) {
-            dsl.factory((_) => "Hello World");
+            dsl.factory((_) => "Hello world");
           })
           ..bind<MyComponentB<String>>((dsl) {
             dsl.eagerSingleton((component) {
