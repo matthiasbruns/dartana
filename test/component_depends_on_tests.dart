@@ -7,25 +7,26 @@ import 'test_logger.dart';
 
 void main() {
   Dartana.logger = TestLogger();
-  
+
   group("Injection with multiple components", () {
     test("should inject dependencies", () {
-      var module1 = Module.createModule(body: (module) {
+      var module1 = Module.createModule((module) {
         module
-          ..bind<String>(body: (dsl) {
+          ..bind<String>((dsl) {
             dsl
               ..factory((factory) {
                 return "Hello world";
               });
           })
           ..bind<String>(
-              name: "another",
-              body: (dsl) {
-                dsl
-                  ..factory((factory) {
-                    return "Hello world 2";
-                  });
-              });
+            (dsl) {
+              dsl
+                ..factory((factory) {
+                  return "Hello world 2";
+                });
+            },
+            name: "another",
+          );
       });
 
       var component1 = Component.createComponent(modules: [module1]);
@@ -33,9 +34,9 @@ void main() {
       expect(component1.inject(name: "another"), "Hello world 2");
       expect(() => component1.inject<int>(), throwsInjectionException);
 
-      var module2 = Module.createModule(body: (module) {
+      var module2 = Module.createModule((module) {
         module
-          ..bind<int>(body: (dsl) {
+          ..bind<int>((dsl) {
             dsl..factory((factory) => 1337);
           });
       });
@@ -44,12 +45,12 @@ void main() {
       expect(component2.inject<int>(), 1337);
       expect(() => component2.inject<String>(), throwsInjectionException);
 
-      var module3 = Module.createModule(body: (module) {
+      var module3 = Module.createModule((module) {
         module
-          ..bind<MyComponentC<String, String>>(body: (dsl) {
+          ..bind<MyComponentC<String, String>>((dsl) {
             dsl..factory((factory) => MyComponentC("a", "b"));
           })
-          ..bind<MyComponentC<String, int>>(body: (dsl) {
+          ..bind<MyComponentC<String, int>>((dsl) {
             dsl
               ..factory(
                   (factory) => MyComponentC(factory.get(), factory.get()));
@@ -77,18 +78,18 @@ void main() {
     });
 
     test("should inject dependencies over multiple component tiers", () {
-      var module1 = Module.createModule(body: (module) {
+      var module1 = Module.createModule((module) {
         module
-          ..bind<String>(body: (dsl) {
+          ..bind<String>((dsl) {
             dsl..factory((factory) => "Hello world");
           });
       });
 
       var component1 = Component.createComponent(modules: [module1]);
       var component2 = Component.createComponent(dependsOn: [component1]);
-      var module3 = Module.createModule(body: (module) {
+      var module3 = Module.createModule((module) {
         module
-          ..bind<int>(body: (dsl) {
+          ..bind<int>((dsl) {
             dsl..factory((factory) => 1337);
           });
       });
@@ -102,23 +103,23 @@ void main() {
     });
 
     test("should throw override exception for overrides in components", () {
-      var module1 = Module.createModule(body: (module) {
+      var module1 = Module.createModule((module) {
         module
-          ..bind<MyComponent>(body: (dsl) {
+          ..bind<MyComponent>((dsl) {
             dsl..factory((factory) => MyComponentA());
           });
       });
 
-      var module2 = Module.createModule(body: (module) {
+      var module2 = Module.createModule((module) {
         module
-          ..bind<MyComponent>(body: (dsl) {
+          ..bind<MyComponent>((dsl) {
             dsl..factory((factory) => MyComponentA());
           });
       });
 
-      var module3 = Module.createModule(body: (module) {
+      var module3 = Module.createModule((module) {
         module
-          ..bind<String>(body: (dsl) {
+          ..bind<String>((dsl) {
             dsl..factory((factory) => "Hello world");
           });
       });
@@ -126,9 +127,8 @@ void main() {
       var component1 = Component.createComponent(modules: [module1]);
       var component2 = Component.createComponent(modules: [module2]);
 
-      var fn = () =>
-          Component.createComponent(
-              modules: [module3], dependsOn: [component1, component2]);
+      var fn = () => Component.createComponent(
+          modules: [module3], dependsOn: [component1, component2]);
 
       expect(() => fn(), throwsOverrideException);
     });
