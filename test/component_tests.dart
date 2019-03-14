@@ -15,8 +15,8 @@ void main() {
 
     test("should throw exception when all modules are empty", () {
       var fn = () {
-        var module1 = Module.createModule(body: (module) {});
-        var module2 = Module.createModule(body: (module) {});
+        var module1 = Module.createModule((module) {});
+        var module2 = Module.createModule((module) {});
 
         return Component.createComponent(modules: [module1, module2]);
       };

@@ -10,8 +10,8 @@ class DelegateBeforeInitialization with DartanaMixin {
   DelegateBeforeInitialization() {
     myComponent = inject<MyComponent>();
 
-    var module = Module.createModule(body: (module) {
-      module.bind<MyComponent>(body: (dsl) {
+    var module = Module.createModule((module) {
+      module.bind<MyComponent>((dsl) {
         dsl.singleton((_) => MyComponentA());
       });
     });
