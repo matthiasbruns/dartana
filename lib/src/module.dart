@@ -77,7 +77,7 @@ class ProviderDsl {
   ProviderDsl(this.context);
 
   T get<T>({String name}) {
-    return context.injectNow<T>(name: name);
+    return context.injectNow<T>(name);
   }
 
 //  T lazy<T>({String name}) {
